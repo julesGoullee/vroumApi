@@ -36,7 +36,14 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// error handlers
+// Common error handlers
+app.use(function(err, req, res, next) {
+    if (err && err.message && err.message === 'invalid json') {
+        res.status(400);
+        err.data = err.message;
+    }
+    next(err);
+});
 
 // development error handler
 // will print stacktrace
@@ -44,7 +51,6 @@ if (app.get('env') === 'development') {
     require("debug").enable('vroumApi');
 
     app.use(function(err, req, res, next) {
-
         if (!res.statusCode) {
             res.status(500);
         }
@@ -62,8 +68,8 @@ if (app.get('env') === 'development') {
 if (app.get('env') === 'production') {
     app.set('x-powered-by', false);
     require("debug").enable('*');
+    
     app.use(function (err, req, res, next) {
-
         if (!res.statusCode) {
             res.status(500);
         }

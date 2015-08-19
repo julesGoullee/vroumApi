@@ -13,7 +13,10 @@ module.exports = function(grunt) {
                     reporter: 'spec',
                     clearRequireCache: true
                 },
-                src: ['test/**/*.js']
+                src: [
+                    'test/test.config.js',
+                    'test/**/*.js'
+                ]
             }
         },
         watch: {
@@ -22,6 +25,7 @@ module.exports = function(grunt) {
             },
             all: {
                 files: [
+                    'test/test.config.js',
                     'models/**/*.js',
                     'routes/**/*.js',
                     'bin/*.js',
@@ -30,8 +34,8 @@ module.exports = function(grunt) {
                     'gruntfile.js'
                 ],
                 tasks: [
-                    'jshint:all',
-                    'mochaTest'
+                    'mochaTest',
+                    'jshint:all'
                 ]
             },
             jshint:{
@@ -72,11 +76,11 @@ module.exports = function(grunt) {
     grunt.registerTask('tdd', function(){
         grunt.option('force', true);
         grunt.task.run([
-            'jshint:all',
             'mochaTest',
+            'jshint:all',
             'watch:all'
         ]);
     });
 
-    grunt.registerTask('travis', ['jshint:all','mochaTest']);
+    grunt.registerTask('travis', ['mochaTest','jshint:all']);
 };

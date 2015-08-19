@@ -35,7 +35,7 @@ router.put('/', function (req, res, next) {
                     err.data = 'Name already exist, it will unique';
                 }
                 else{
-                    debug('POST ' + errBdd);
+                    debug('PUT ' + errBdd);
                     err.data = JSON.stringify(errBdd);
                     res.status(500);
                 }

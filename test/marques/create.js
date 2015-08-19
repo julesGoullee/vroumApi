@@ -1,7 +1,7 @@
 "use strict";
 var mockgoose = require('mockgoose');
 
-describe('Create', function() {
+describe('Marques:Create', function() {
 
 
     it('Should add one marque', function(done) {

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=production node ./bin/www",
+    "start": "NODE_ENV=production mongoAuth=heroku_bb4knh05:94ea69aef458fa269f73cffb2d0532e3@ds035543.mongolab.com:35543/heroku_bb4knh05 node ./bin/www",
     "test": "./node_modules/grunt-cli/bin/grunt travis"
   },
   "dependencies": {

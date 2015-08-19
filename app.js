@@ -40,7 +40,6 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-
     require("debug").enable('vroumApi');
 
     app.use(function(err, req, res, next) {
@@ -76,7 +75,9 @@ if (app.get('env') === 'production') {
 }
 
 // Database
-mongoose.connect('mongodb://localhost/vroum', function(err) {
+var mongoStringConnect = 'mongodb://' + ( process.env.mongoAuth || 'localhost/vroum');
+
+mongoose.connect( mongoStringConnect, function(err) {
     if (err) {
         process.nextTick(function() {
             throw err;

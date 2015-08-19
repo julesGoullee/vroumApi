@@ -16,6 +16,7 @@ var app = express();
 var db = mongoose.connection;
 app.use(favicon(path.join(__dirname, 'public/img', 'favicon.ico')));
 app.use(logger('dev'));
+app.set('json spaces', 2);
 app.use(function (req, res, next) {
     res.contentType('application/json');
     next();
@@ -48,7 +49,7 @@ if (app.get('env') === 'development') {
             res.status(500);
         }
 
-        res.send({
+        res.json({
             code: res.statusCode,
             data: err.data,
             stack: err.stack
@@ -67,7 +68,7 @@ if (app.get('env') === 'production') {
             res.status(500);
         }
 
-        res.send({
+        res.json({
             code: res.statusCode,
             data: err.data || 'internal server error'
         });

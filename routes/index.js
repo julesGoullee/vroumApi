@@ -6,7 +6,7 @@ var router = express.Router();
 /* GET api status */
 router.get('/', function(req, res) {
     res.status(200);
-    res.send({
+    res.json({
         code: res.statusCode,
         data: 'Api is running'
     });

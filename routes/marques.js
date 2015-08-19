@@ -23,7 +23,7 @@ router.put('/', function (req, res, next) {
             }
             else if (!errBdd) {
                 res.status(200);
-                res.send({
+                res.json({
                     code: res.statusCode,
                     data: marque
                 });
@@ -84,7 +84,7 @@ router.post('/', function(req, res, next) {
         product.save(function (errBdd) {
             if (!errBdd) {
                 res.status(201);
-                return res.send({
+                return res.json({
                     code: res.statusCode,
                     data: 'Create'
                 });

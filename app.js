@@ -1,6 +1,4 @@
 "use strict";
-process.env.NODE_ENV = 'development';
-//process.env.NODE_ENV = 'production';
 
 var express = require('express');
 var path = require('path');
@@ -42,6 +40,9 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+
+    require("debug").enable('vroumApi');
+
     app.use(function(err, req, res, next) {
 
         if (!res.statusCode) {
@@ -60,6 +61,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 if (app.get('env') === 'production') {
     app.set('x-powered-by', false);
+    require("debug").enable('*');
     app.use(function (err, req, res, next) {
 
         if (!res.statusCode) {

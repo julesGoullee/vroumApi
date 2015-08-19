@@ -1,4 +1,5 @@
 "use strict";
+
 require('mocha-sinon');
 global.events = require('events');
 global.chai = require('chai');

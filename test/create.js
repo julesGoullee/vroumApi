@@ -3,6 +3,7 @@ var mockgoose = require('mockgoose');
 
 describe('Create', function() {
 
+
     it('Should add one marque', function(done) {
 
         mockRequest.post('/marques')
@@ -67,7 +68,7 @@ describe('Create', function() {
                 name: 'marquesName1',
                 description: 'marquesDescription1'
             })
-            .end(function(err, res) {
+            .end(function() {
                 mockRequest.post('/marques')
                     .send({
                         name: 'marquesName2',
@@ -90,7 +91,7 @@ describe('Create', function() {
                 name: 'marquesName1',
                 description: 'marquesDescription1'
             })
-            .end(function(err, res) {
+            .end(function() {
                 mockRequest.post('/marques')
                     .send({
                         name: 'marquesName1',
@@ -108,5 +109,5 @@ describe('Create', function() {
 
     afterEach(function(){
         mockgoose.reset();
-    })
+    });
 });

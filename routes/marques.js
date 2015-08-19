@@ -6,6 +6,9 @@ var debug = require('debug')('vroumApi:db:marques');
 
 var marqueModel = require('../models/marque');
 
+function isValidFormatId(id) {
+    return typeof id === 'string' && mongoose.Types.ObjectId.isValid(id);
+}
 
 router.put('/', function (req, res, next) {
     if (req.query && isValidFormatId(req.query.id) ) {
@@ -112,7 +115,4 @@ router.post('/', function(req, res, next) {
 
 });
 
-function isValidFormatId(id) {
-    return typeof id === 'string' && mongoose.Types.ObjectId.isValid(id);
-}
 module.exports = router;

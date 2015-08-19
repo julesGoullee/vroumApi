@@ -10,7 +10,7 @@
     
 ###Request
 #####Get Status
-    `curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://vroumapi.herokuapp.com`
+`curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://vroumapi.herokuapp.com`
 #####GetAll marques
     curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://vroumapi.herokuapp.com/marques
 #####Create one marque

@@ -34,4 +34,6 @@ module.exports = function(grunt) {
     grunt.registerTask('tdd', function(){
         grunt.task.run(['mochaTest', 'watch']);
     });
+
+    grunt.registerTask('travis', 'mochaTest');
 };

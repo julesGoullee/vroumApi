@@ -17,10 +17,7 @@ var db = mongoose.connection;
 app.use(favicon(path.join(__dirname, 'public/img', 'favicon.ico')));
 app.use(logger('dev'));
 app.set('json spaces', 2);
-app.use(function (req, res, next) {
-    res.contentType('application/json');
-    next();
-});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -80,6 +77,13 @@ if (app.get('env') === 'production') {
         });
     });
 }
+
+// Common middleWare Headers
+app.use(function (req, res, next) {
+    res.contentType('application/json');
+    res.contentLength(JSON.stringify(res.body).length);
+    next();
+});
 
 // Database
 var mongoStringConnect = 'mongodb://' + ( process.env.mongoAuth || 'localhost/vroum');

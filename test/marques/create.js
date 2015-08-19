@@ -15,6 +15,7 @@ describe('Marques:Create', function() {
                 var resContent = JSON.parse(res.text);
 
                 expect(resContent.code).to.equal(201);
+                expect(res.statusCode).to.equal(201);
                 expect(resContent.data).to.equal('Create');
                 done();
             });
@@ -26,6 +27,7 @@ describe('Marques:Create', function() {
                 var resContent = JSON.parse(res.text);
 
                 expect(resContent.code).to.equal(400);
+                expect(res.statusCode).to.equal(400);
                 expect(resContent.data).to.equal('Missing params name or description');
                 done();
             });
@@ -41,6 +43,7 @@ describe('Marques:Create', function() {
                 var resContent = JSON.parse(res.text);
 
                 expect(resContent.code).to.equal(400);
+                expect(res.statusCode).to.equal(400);
                 expect(resContent.data).to.equal('Missing params name or description');
                 done();
             });
@@ -56,6 +59,7 @@ describe('Marques:Create', function() {
                 var resContent = JSON.parse(res.text);
 
                 expect(resContent.code).to.equal(400);
+                expect(res.statusCode).to.equal(400);
                 expect(resContent.data).to.equal('Missing params name or description');
                 done();
             });
@@ -78,6 +82,7 @@ describe('Marques:Create', function() {
                         var resContent = JSON.parse(res.text);
 
                         expect(resContent.code).to.equal(201);
+                        expect(res.statusCode).to.equal(201);
                         expect(resContent.data).to.equal('Create');
                         done();
                     });
@@ -101,6 +106,7 @@ describe('Marques:Create', function() {
                         var resContent = JSON.parse(res.text);
 
                         expect(resContent.code).to.equal(409);
+                        expect(res.statusCode).to.equal(409);
                         expect(resContent.data).to.equal('Name already exist, it will unique');
                         done();
                     });

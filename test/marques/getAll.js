@@ -29,6 +29,7 @@ describe('Marques:GetAll', function() {
                 var resContent = JSON.parse(res.text);
 
                 expect(resContent.code).to.equal(200);
+                expect(res.statusCode).to.equal(200);
                 expect(resContent.data.length).to.equal(1);
                 
                 expect(resContent.data[0].name).to.equal(_mockMarques1.name);
@@ -61,6 +62,7 @@ describe('Marques:GetAll', function() {
                     var resContent = JSON.parse(res.text);
 
                     expect(resContent.code).to.equal(200);
+                    expect(res.statusCode).to.equal(200);
                     expect(resContent.data.length).to.equal(2);
 
                     expect(resContent.data[1].name).to.equal(_mockMarques2.name);

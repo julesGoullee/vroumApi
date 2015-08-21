@@ -10,6 +10,7 @@ function isValidFormatId(id) {
     return typeof id === 'string' && mongoose.Types.ObjectId.isValid(id);
 }
 
+//GET ONE
 router.get('/:id', function (req, res, next) {
     if (req.params && isValidFormatId(req.params.id) ) {
 
@@ -29,20 +30,10 @@ router.get('/:id', function (req, res, next) {
                 });
             }
             else {
-                if (errBdd.code === 11000) {
-                    res.status(404);
-                    res.json({
-                        code: res.statusCode,
-                        data:  'Name already exist, it will unique'
-                    });
-                }
-                else{
-                    debug('PUT ' + errBdd);
-                    var err = new Error(errBdd);
-                    res.status(500);
-                    next(err);
-                }
-               
+                debug('PUT ' + errBdd);
+                var err = new Error(errBdd);
+                res.status(500);
+                next(err);
             }
         });
     }
@@ -55,6 +46,7 @@ router.get('/:id', function (req, res, next) {
     }
 });
 
+//GET ALL
 router.get('/', function(req, res, next) {
     marqueModel.find(function (errBdd, marques) {
 
@@ -62,7 +54,7 @@ router.get('/', function(req, res, next) {
 
             res.status(200);
 
-            return res.json({
+            res.json({
                 code: res.statusCode,
                 data: marques
             });
@@ -76,18 +68,19 @@ router.get('/', function(req, res, next) {
     });
 });
 
+//CREATE
 router.post('/', function(req, res, next) {
 
     if (req.body && req.body.name && req.body.description) {
-        var product = new marqueModel({
+        var marque = new marqueModel({
             name: req.body.name,
             description: req.body.description
         });
 
-        product.save(function (errBdd) {
+        marque.save(function (errBdd) {
             if (!errBdd) {
                 res.status(201);
-                return res.json({
+                res.json({
                     code: res.statusCode,
                     data: 'Create'
                 });
@@ -119,6 +112,68 @@ router.post('/', function(req, res, next) {
         });
     }
 
+});
+
+//UPDATE
+router.put('/:id', function(req, res, next){
+    if (req.params && isValidFormatId(req.params.id) ) {
+        if (req.body && req.body.name && req.body.description){
+            marqueModel.findOneAndUpdate({_id: req.params.id},
+            {
+                $set:{
+                    name: req.body.name,
+                    description: req.body.description
+                },
+                $inc: {
+                    version: 1
+                }
+            },{ upsert: false },function (errBdd, marque) {
+                if (marque === null) {
+                    res.status(404);
+                    res.json({
+                        code: res.statusCode,
+                        data: 'Id marque Not found'
+                    });
+                }
+                else if (!errBdd) {
+                    res.status(200);
+                    res.json({
+                        code: res.statusCode,
+                        data: 'Update'
+                    });
+                }
+                else {
+                    if (errBdd.code === 11001) {
+                        res.status(409);
+                        res.json({
+                            code: res.statusCode,
+                            data: 'Name already exist, it will unique'
+                        });
+                    }
+                    else{
+                        debug('PUT ' + errBdd);
+                        var err = new Error(errBdd);
+                        res.status(500);
+                        next(err);
+                    }
+                }
+            });
+        }
+        else{
+            res.status(400);
+            res.json({
+                code: res.statusCode,
+                data: 'Missing params name or description'
+            });
+        }
+    }
+    else{
+        res.status(400);
+        res.json({
+            code: res.statusCode,
+            data: 'Id params format incorrect'
+        });
+    }
 });
 
 module.exports = router;

@@ -32,11 +32,12 @@ app.use('/', routes);
 app.use('/marques', marques);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(req, res) {
     res.status(404);
-    var err = new Error();
-    err.data = 'Not found';
-    next(err);
+    res.json({
+        code: 404,
+        data: 'Not found'
+    });
 });
 
 // Common error handlers
@@ -51,9 +52,11 @@ app.use(function(err, req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    require("debug").enable('vroumApi');
+    require("debug").enable('vroumApi:*');
 
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
+        console.log('development');
+
         if (!res.statusCode) {
             res.status(500);
         }
@@ -72,14 +75,14 @@ if (app.get('env') === 'production') {
     app.set('x-powered-by', false);
     require("debug").enable('*');
     
-    app.use(function (err, req, res, next) {
+    app.use(function (err, req, res) {
         if (!res.statusCode) {
             res.status(500);
         }
 
         res.json({
             code: res.statusCode,
-            data: err.data || 'internal server error'
+            data: 'internal server error'
         });
     });
 }

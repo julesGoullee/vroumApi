@@ -14,12 +14,12 @@ router.put('/', function (req, res, next) {
     if (req.query && isValidFormatId(req.query.id) ) {
 
         marqueModel.findById(req.query.id, function (errBdd, marque) {
-            var err;
             if (marque === null) {
-                err = new Error('mongosse findById');
                 res.status(404);
-                err.data = 'Not found';
-                next(err);
+                res.json({
+                    code: res.statusCode,
+                    data: 'Not found'
+                });
             }
             else if (!errBdd) {
                 res.status(200);
@@ -29,26 +29,29 @@ router.put('/', function (req, res, next) {
                 });
             }
             else {
-                err = new Error('mongosse findById');
                 if (errBdd.code === 11000) {
                     res.status(404);
-                    err.data = 'Name already exist, it will unique';
+                    res.json({
+                        code: res.statusCode,
+                        data:  'Name already exist, it will unique'
+                    });
                 }
                 else{
                     debug('PUT ' + errBdd);
-                    err.data = JSON.stringify(errBdd);
+                    var err = new Error(errBdd);
                     res.status(500);
+                    next(err);
                 }
-                next(err);
-
+               
             }
         });
     }
     else {
-        var err = new Error('req.query.id incorrect');
         res.status(400);
-        err.data = 'Id params format incorrect';
-        next(err);
+        res.json({
+            code: res.statusCode,
+            data: 'Id params format incorrect'
+        });
     }
 });
 
@@ -59,14 +62,14 @@ router.get('/', function(req, res, next) {
 
             res.status(200);
 
-            return res.send({
+            return res.json({
                 code: res.statusCode,
                 data: marques
             });
         }
         else {
-            var err = new Error(errBdd);
             debug('GET ' + errBdd);
+            var err = new Error(errBdd);
             res.status(500);
             next(err);
         }
@@ -90,27 +93,30 @@ router.post('/', function(req, res, next) {
                 });
             }
             else {
-                var err = new Error('mongosse save');
-
                 if (errBdd.code === 11000) {
                     res.status(409);
-                    err.data = 'Name already exist, it will unique';
+                    res.json({
+                        code: res.statusCode,
+                        data: 'Name already exist, it will unique'
+                    });
                 }
                 else{
                     debug('POST ' + errBdd);
-                    err.data = JSON.stringify(errBdd);
+                    var err = new Error(errBdd);
                     res.status(500);
+                    next(err);
                 }
-                next(err);
+                
 
             }
         });
     }
     else {
-        var err = new Error('req.body incorrect');
         res.status(400);
-        err.data = 'Missing params name or description';
-        next(err);
+        res.json({
+            code: res.statusCode,
+            data: 'Missing params name or description'
+        });
     }
 
 });

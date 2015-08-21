@@ -13,6 +13,8 @@
     "it": false,
     "mockRequest": false,
     "expect": false,
+    "before": false,
+    "after": false,
     "afterEach": false,
     "beforeEach": false,
     "describe": false,

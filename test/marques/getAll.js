@@ -22,12 +22,11 @@ describe('Marques:GetAll', function() {
             });
     });
 
-    it('Should get on marques', function(done) {
+    it('Should get one marques', function(done) {
 
         mockRequest.get('/marques')
             .end(function(err, res) {
                 var resContent = JSON.parse(res.text);
-
                 expect(resContent.code).to.equal(200);
                 expect(res.statusCode).to.equal(200);
                 expect(resContent.data.length).to.equal(1);

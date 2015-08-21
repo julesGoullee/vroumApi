@@ -2,9 +2,7 @@
 
 module.exports = function(grunt) {
 
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    require('jit-grunt')(grunt);
 
     grunt.initConfig({
         mochaTest: {
@@ -62,6 +60,7 @@ module.exports = function(grunt) {
                     'models/**/*.js',
                     'routes/**/*.js',
                     'bin/*.js',
+                    'app.js',
                     'test/**/*.js'
                 ]
             }

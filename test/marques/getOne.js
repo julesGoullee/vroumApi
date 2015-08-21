@@ -21,16 +21,17 @@ describe('Marques:GetOne', function() {
             });
     });
 
-    it('Should get one marques of one by _id', function(done) {
+    it('Should get one marque of one by _id', function(done) {
 
         mockRequest.get('/marques')
             .end(function(err, res) {
                 var marque1 = JSON.parse(res.text).data[0];
                 
-                mockRequest.put('/marques?id=' + marque1._id)
+                mockRequest.get('/marques/' + marque1._id)
                     .end(function(err, res) {
                         var resContent = JSON.parse(res.text);
-    
+                        
+                        expect(res.statusCode).to.equal(200);
                         expect(resContent.code).to.equal(200);
     
                         expect(resContent.data.name).to.equal(marque1.name);
@@ -49,31 +50,11 @@ describe('Marques:GetOne', function() {
             });
     });
     
-    it('Should not get if id params is not defined', function(done) {
-        mockRequest.put('/marques?id=')
-            .end(function(err, res) {
-                var resContent = JSON.parse(res.text);
-
-                expect(resContent.code).to.equal(400);
-                expect(res.statusCode).to.equal(400);
-                expect(resContent.data).to.equal('Id params format incorrect');
-                mockRequest.put('/marques')
-                    .end(function(err, res) {
-                        var resContent = JSON.parse(res.text);
-
-                        expect(resContent.code).to.equal(400);
-                        expect(res.statusCode).to.equal(400);
-                        expect(resContent.data).to.equal('Id params format incorrect');
-                        done();
-                    });
-            });
-    });
-
     it('Should not get if id params invalid mongoId', function(done) {
         
         var invalidMongoId = '55d45cb57e8450722b3b7dffXX';
         
-        mockRequest.put('/marques?id=' + invalidMongoId)
+        mockRequest.get('/marques/' + invalidMongoId)
             .end(function (err, res) {
                 var resContent = JSON.parse(res.text);
 
@@ -88,7 +69,7 @@ describe('Marques:GetOne', function() {
 
         var invalidMongoId = '55d45cb57e8450722b3b7dff';
 
-        mockRequest.put('/marques?id=' + invalidMongoId)
+        mockRequest.get('/marques/' + invalidMongoId)
             .end(function (err, res) {
                 var resContent = JSON.parse(res.text);
 
@@ -114,7 +95,7 @@ describe('Marques:GetOne', function() {
                 .end(function(err, res) {
                     var marque1 = JSON.parse(res.text).data[0];
 
-                    mockRequest.put('/marques?id=' + marque1._id)
+                    mockRequest.get('/marques/' + marque1._id)
                         .end(function(err, res) {
                             var resContent = JSON.parse(res.text);
 
@@ -143,7 +124,7 @@ describe('Marques:GetOne', function() {
                 .end(function(err, res) {
                     var marque2 = JSON.parse(res.text).data[1];
 
-                    mockRequest.put('/marques?id=' + marque2._id)
+                    mockRequest.get('/marques/' + marque2._id)
                         .end(function(err, res) {
                             var resContent = JSON.parse(res.text);
 

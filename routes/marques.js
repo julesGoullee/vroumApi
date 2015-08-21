@@ -10,10 +10,10 @@ function isValidFormatId(id) {
     return typeof id === 'string' && mongoose.Types.ObjectId.isValid(id);
 }
 
-router.put('/', function (req, res, next) {
-    if (req.query && isValidFormatId(req.query.id) ) {
+router.get('/:id', function (req, res, next) {
+    if (req.params && isValidFormatId(req.params.id) ) {
 
-        marqueModel.findById(req.query.id, function (errBdd, marque) {
+        marqueModel.findById(req.params.id, function (errBdd, marque) {
             if (marque === null) {
                 res.status(404);
                 res.json({

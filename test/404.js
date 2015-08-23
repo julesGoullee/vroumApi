@@ -42,7 +42,7 @@ describe('404:api', function() {
     
     it('Should not delete', function(done) {
 
-        mockRequest.put('/urlNotExist')
+        mockRequest.delete('/urlNotExist')
             .end(function(err, res) {
                 var resContent = JSON.parse(res.text);
 

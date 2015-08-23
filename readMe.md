@@ -32,15 +32,15 @@
   
   Structure one Marque:
    
-      ```json
-      {
-        "_id": "ObjectIdMongo",
-        "name": "string",
-        "description": "string",
-        "modified": "Date(automatique last modified date)",
-        "version": "int(Number update revision)"  
-      }
-      ```
+    ```javascript
+    {
+      _id: ObjectIdMongo,
+      name: String,
+      description: String,
+      modified: Date(automatique last modified date),
+      version: Number(Number update revision) 
+    }
+    ```
 
   GetAll marques:
    
@@ -60,10 +60,10 @@
   * URL: /marques
   * PARAMS: 
   
-      ```json
+      ```javascript
       {
-        name: string,
-        description: string
+        "name": String,
+        "description": String
       }
       ```
       
@@ -103,7 +103,7 @@
           "name": "marque1Update1",
           "description": "descriptionMarque1Update1"
         }'
-        https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f`
+        https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f
         ```
         
   Delete one marque
@@ -115,4 +115,4 @@
       curl -i 
         -H "Accept: application/json" 
         -H "Content-Type: application/json" 
-        -X DELETE https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f`
+        -X DELETE https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f

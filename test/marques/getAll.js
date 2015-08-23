@@ -1,7 +1,6 @@
 "use strict";
 
 var mockgoose = require('mockgoose');
-var mongoose = require('mongoose');
 
 describe('Marques:GetAll', function() {
     var _mockMarques1 = {
@@ -32,16 +31,6 @@ describe('Marques:GetAll', function() {
                 expect(resContent.data.length).to.equal(1);
                 
                 expect(resContent.data[0].name).to.equal(_mockMarques1.name);
-                
-                expect(resContent.data[0]._id).to.be.a('string');
-                expect(mongoose.Types.ObjectId.isValid(resContent.data[0]._id)).to.equal(true);
-                
-                expect(resContent.data[0].modified).to.be.a('string');
-                var modifiedDate = new Date(Date.parse(resContent.data[0].modified));
-                var isValideDate = !isNaN(modifiedDate.valueOf());
-                expect(isValideDate).to.equal(true);
-                
-                expect(resContent.data[0].version).to.equal(0);
                 done();
             });
     });

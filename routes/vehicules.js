@@ -17,6 +17,28 @@ function isInt( number ){
         parseInt(number) > 0;
 }
 
+//GET ALL
+router.get('/', function(req, res, next) {
+    VehiculeModel.find(function (errBdd, vehicules) {
+
+        if (!errBdd) {
+
+            res.status(200);
+
+            res.json({
+                code: res.statusCode,
+                data: vehicules
+            });
+        }
+        else {
+            debug('GET ' + errBdd);
+            var err = new Error(errBdd);
+            res.status(500);
+            next(err);
+        }
+    });
+});
+
 //CREATE
 router.post('/', function(req, res, next) {
 

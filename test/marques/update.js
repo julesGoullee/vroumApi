@@ -38,7 +38,7 @@ describe('Marques:Update', function() {
                         expect(res.statusCode).to.equal(200);
                         expect(resContent.code).to.equal(200);
 
-                        expect(resContent.data).to.equal('Update');
+                        expect(resContent.data).to.equal('Updated marque');
                         mockRequest.get('/marques/' + marque1._id)
                             .end(function(err, res) {
                                 var resContent = JSON.parse(res.text);
@@ -71,7 +71,7 @@ describe('Marques:Update', function() {
                         expect(res.statusCode).to.equal(200);
                         expect(resContent.code).to.equal(200);
 
-                        expect(resContent.data).to.equal('Update');
+                        expect(resContent.data).to.equal('Updated marque');
                         mockRequest.get('/marques/' + marque1._id)
                             .end(function(err, res) {
                                 var resContent = JSON.parse(res.text);
@@ -90,7 +90,7 @@ describe('Marques:Update', function() {
                                         expect(res.statusCode).to.equal(200);
                                         expect(resContent.code).to.equal(200);
 
-                                        expect(resContent.data).to.equal('Update');
+                                        expect(resContent.data).to.equal('Updated marque');
                                         mockRequest.get('/marques/' + marque1._id)
                                             .end(function(err, res) {
                                                 var resContent = JSON.parse(res.text);
@@ -170,7 +170,7 @@ describe('Marques:Update', function() {
                             expect(res.statusCode).to.equal(200);
                             expect(resContent.code).to.equal(200);
 
-                            expect(resContent.data).to.equal('Update');
+                            expect(resContent.data).to.equal('Updated marque');
                             mockRequest.get('/marques/' + marque1._id)
                                 .end(function(err, res) {
                                     var resContent = JSON.parse(res.text);
@@ -201,7 +201,7 @@ describe('Marques:Update', function() {
                             expect(res.statusCode).to.equal(200);
                             expect(resContent.code).to.equal(200);
 
-                            expect(resContent.data).to.equal('Update');
+                            expect(resContent.data).to.equal('Updated marque');
                             mockRequest.get('/marques')
                                 .end(function() {
                                     //TODO mockgoose not suppported index unique :'(

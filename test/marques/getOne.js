@@ -75,7 +75,7 @@ describe('Marques:GetOne', function() {
 
                 expect(resContent.code).to.equal(404);
                 expect(res.statusCode).to.equal(404);
-                expect(resContent.data).to.equal('Not found');
+                expect(resContent.data).to.equal('Marque Not found');
                 done();
             });
     });

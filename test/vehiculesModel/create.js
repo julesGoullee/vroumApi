@@ -1,7 +1,7 @@
 "use strict";
 var mockgoose = require('mockgoose');
 
-describe.only('VehiculeModel:Create', function() {
+describe('VehiculeModel:Create', function() {
 
     var _marque;
     beforeEach(function(done){

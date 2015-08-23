@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var router = express.Router({ params: 'inherit' });
 var debug = require('debug')('vroumApi:db:marques');
 
-var marqueModel = require('../models/marque');
+var MarqueModel = require('../models/marque');
 
 function isValidFormatId(id) {
     return typeof id === 'string' && mongoose.Types.ObjectId.isValid(id);
@@ -14,12 +14,12 @@ function isValidFormatId(id) {
 router.get('/:id', function (req, res, next) {
     if (req.params && isValidFormatId(req.params.id) ) {
 
-        marqueModel.findById(req.params.id, function (errBdd, marque) {
+        MarqueModel.findById(req.params.id, function (errBdd, marque) {
             if (marque === null) {
                 res.status(404);
                 res.json({
                     code: res.statusCode,
-                    data: 'Not found'
+                    data: 'Marque Not found'
                 });
             }
             else if (!errBdd) {
@@ -48,7 +48,7 @@ router.get('/:id', function (req, res, next) {
 
 //GET ALL
 router.get('/', function(req, res, next) {
-    marqueModel.find(function (errBdd, marques) {
+    MarqueModel.find(function (errBdd, marques) {
 
         if (!errBdd) {
 
@@ -72,7 +72,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 
     if (req.body && req.body.name && req.body.description) {
-        var marque = new marqueModel({
+        var marque = new MarqueModel({
             name: req.body.name,
             description: req.body.description
         });
@@ -118,7 +118,7 @@ router.post('/', function(req, res, next) {
 router.put('/:id', function(req, res, next){
     if (req.params && isValidFormatId(req.params.id) ) {
         if (req.body && req.body.name && req.body.description){
-            marqueModel.findOneAndUpdate({_id: req.params.id},
+            MarqueModel.findOneAndUpdate({_id: req.params.id},
             {
                 $set:{
                     name: req.body.name,
@@ -140,7 +140,7 @@ router.put('/:id', function(req, res, next){
                     res.status(200);
                     res.json({
                         code: res.statusCode,
-                        data: 'Update'
+                        data: 'Updated marque'
                     });
                 }
                 else {
@@ -148,7 +148,7 @@ router.put('/:id', function(req, res, next){
                         res.status(409);
                         res.json({
                             code: res.statusCode,
-                            data: 'Name already exist, it will unique'
+                            data: 'Marque name already exist, it will unique'
                         });
                     }
                     else{
@@ -181,7 +181,7 @@ router.put('/:id', function(req, res, next){
 router.delete('/:id', function (req, res, next) {
     if (req.params && isValidFormatId(req.params.id) ) {
 
-        marqueModel.findByIdAndRemove(req.params.id, function (errBdd, marque) {
+        MarqueModel.findByIdAndRemove(req.params.id, function (errBdd, marque) {
             if (marque === null) {
                 res.status(404);
                 res.json({

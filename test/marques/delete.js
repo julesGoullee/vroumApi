@@ -36,7 +36,7 @@ describe('Marques:Delete',function(){
                                 var resContent = JSON.parse(res.text);
                                 expect(res.statusCode).to.equal(404);
                                 expect(resContent.code).to.equal(404);
-                                expect(resContent.data).to.equal('Not found');
+                                expect(resContent.data).to.equal('Marque Not found');
                                 done();
                             });
                     });
@@ -99,7 +99,7 @@ describe('Marques:Delete',function(){
                                     var resContent = JSON.parse(res.text);
                                     expect(res.statusCode).to.equal(404);
                                     expect(resContent.code).to.equal(404);
-                                    expect(resContent.data).to.equal('Not found');
+                                    expect(resContent.data).to.equal('Marque Not found');
                                     done();
                                 });
                         });

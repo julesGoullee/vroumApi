@@ -32,15 +32,15 @@
   
   Structure one Marque:
    
-      ```javascript
-      {
-        _id: ObjectIdMongo,
-        name: String,
-        description: String,
-        modified: Date(automatique last modified date),
-        version: Number(Number update revision) 
-      }
-      ```
+    ```javascript
+    {
+      _id: ObjectIdMongo,
+      name: String,
+      description: String,
+      modified: Date(automatique last modified date),
+      version: Number(Number update revision) 
+    }
+    ```
 
   GetAll marques:
    
@@ -116,4 +116,59 @@
         -H "Accept: application/json" 
         -H "Content-Type: application/json" 
         -X DELETE https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f
+      ```
+ 
+ C. Vehicule
+ 
+ Structure one vehicule:
+    
+     ```javascript
+     {
+       _id: ObjectIdMongo,
+       name: String,
+       description: String,
+       year: Number,
+       marqueId: ObjectIdMongo(Ref: Marque ObjectId),
+       modified: Date(automatique last modified date),
+       version: Number(Number update revision) 
+     }
+     ```
+ GetAll marques:
+   
+  * Method: GET
+  * URL /marques
+  
+      ```bash
+      curl -i
+         -H "Accept: application/json"
+         -H "Content-Type: application/json"
+         -X GET https://vroumapi.herokuapp.com/vehicules
+      ```
+
+  Create one vehicule
+    
+  * Method: POST
+  * URL: /marques
+  * PARAMS: 
+  
+      ```javascript
+      {
+        "name": String,
+        "description": String,
+        "year": Number,
+        "marqueId": ObjectIdMongo(Ref: Marque ObjectId),
+        "modified": Date(automatique last modified date),
+      }
+      ```
+      
+      ```bash
+      curl -i 
+        -H "Accept: application/json"
+        -H "Content-Type: application/json"
+        -X POST -d '{
+          "name": "vehicule1",
+          "description": "descriptionVehicule1",
+          "years": "2009"
+         }'
+         https://vroumapi.herokuapp.com/vehicule
       ```

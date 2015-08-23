@@ -1,7 +1,7 @@
 "use strict";
 var mockgoose = require('mockgoose');
 
-describe.only('Marques:Delete',function(){
+describe('Marques:Delete',function(){
     var _mockMarques1 = {
         name: 'marquesName1',
         description: 'marquesDescription1'

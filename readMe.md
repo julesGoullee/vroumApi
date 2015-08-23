@@ -26,21 +26,21 @@
         -H "Accept: application/json" 
         -H "Content-Type: application/json"
         -X GET https://vroumapi.herokuapp.com
-        ```
+      ```
   
   B. Marques
   
   Structure one Marque:
    
-    ```javascript
-    {
-      _id: ObjectIdMongo,
-      name: String,
-      description: String,
-      modified: Date(automatique last modified date),
-      version: Number(Number update revision) 
-    }
-    ```
+      ```javascript
+      {
+        _id: ObjectIdMongo,
+        name: String,
+        description: String,
+        modified: Date(automatique last modified date),
+        version: Number(Number update revision) 
+      }
+      ```
 
   GetAll marques:
    
@@ -76,7 +76,7 @@
           "description": "descriptionMarque1"
          }'
          https://vroumapi.herokuapp.com/marques
-       ```
+      ```
        
   GetOne marque
   
@@ -104,15 +104,16 @@
           "description": "descriptionMarque1Update1"
         }'
         https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f
-        ```
+      ```
         
   Delete one marque
   
   * Method: DELETE
   * URL: /marques/{{marque._id}}
   
-       ```bash
+      ```bash
       curl -i 
         -H "Accept: application/json" 
         -H "Content-Type: application/json" 
         -X DELETE https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f
+      ```

@@ -11,6 +11,7 @@ var debug = require('debug')('vroumApi:db');
 var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var marques = require('./routes/marques');
+var vehicules = require('./routes/vehicules');
 
 var app = express();
 var db = mongoose.connection;
@@ -30,6 +31,7 @@ app.use(cookieParser());
 
 app.use('/', routes);
 app.use('/marques', marques);
+app.use('/vehicules', vehicules);
 
 // catch 404 and forward to error handler
 app.use(function(req, res) {

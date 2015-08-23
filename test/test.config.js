@@ -9,6 +9,7 @@ process.env.NODE_ENV = 'development';
 
 var mockgoose = require('mockgoose');
 var mongoose = require('mongoose');
+global.sinon = require('sinon');
 
 before( function() {
     mockgoose(mongoose);

@@ -18,6 +18,7 @@
     "afterEach": false,
     "beforeEach": false,
     "describe": false,
-    "chai": false
+    "chai": false,
+    "sinon": false
   }
 }

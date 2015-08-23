@@ -46,6 +46,8 @@ describe('Marques:Update', function() {
                                 expect(resContent.code).to.equal(200);
                                 expect(resContent.data.name).to.equal('marquesName1Updated1');
                                 expect(resContent.data.description).to.equal('marquesDescription1Updated1');
+                                //expect(resContent.data.modified).not.to.equal(resContent.data.modified);
+                                //TODO fakeTime && test modifed time
                                 expect(resContent.data.version).to.equal(1);
                                 done();
                             });
@@ -143,7 +145,7 @@ describe('Marques:Update', function() {
             });
     });
 
-    describe('Two marque', function(){
+    describe('Two marques', function(){
         beforeEach(function(done) {
             mockRequest.post('/marques')
                 .send(_mockMarques2)
@@ -201,13 +203,11 @@ describe('Marques:Update', function() {
 
                             expect(resContent.data).to.equal('Update');
                             mockRequest.get('/marques')
-                                .end(function(err, res) {
-                                    var resContent = JSON.parse(res.text);
-
-                                    expect(res.statusCode).to.equal(200);
-                                    expect(resContent.code).to.equal(200);
-
+                                .end(function() {
                                     //TODO mockgoose not suppported index unique :'(
+
+                                    //expect(res.statusCode).to.equal(409);
+                                    //expect(resContent.code).to.equal(409);
                                     //expect(resContent.data[0].name).not.to.equal(resContent.data[1].name);
                                     done();
                                 });

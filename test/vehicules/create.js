@@ -7,8 +7,8 @@ describe('VehiculeModel:Create', function() {
     beforeEach(function(done){
         mockRequest.post('/marques')
             .send({
-                name: 'marquesName1',
-                description: 'marquesDescription1'
+                name: 'marqueName11',
+                description: 'marqueDescription1'
             })
             .end(function() {
                 mockRequest.get('/marques')

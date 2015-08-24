@@ -8,8 +8,8 @@ describe('Marques:Create', function() {
 
         mockRequest.post('/marques')
             .send({
-                name: 'marquesName1',
-                description: 'marquesDescription1'
+                name: 'marqueName1',
+                description: 'marqueName1'
             })
             .end(function(err, res) {
                 var resContent = JSON.parse(res.text);
@@ -37,7 +37,7 @@ describe('Marques:Create', function() {
 
         mockRequest.post('/marques')
             .send({
-                description: 'marquesDescription1'
+                description: 'marqueName1'
             })
             .end(function(err, res) {
                 var resContent = JSON.parse(res.text);
@@ -53,7 +53,7 @@ describe('Marques:Create', function() {
 
         mockRequest.post('/marques')
             .send({
-                name: 'marquesName1'
+                name: 'marqueName1'
             })
             .end(function(err, res) {
                 var resContent = JSON.parse(res.text);
@@ -69,14 +69,14 @@ describe('Marques:Create', function() {
 
         mockRequest.post('/marques')
             .send({
-                name: 'marquesName1',
-                description: 'marquesDescription1'
+                name: 'marqueName1',
+                description: 'marqueName1'
             })
             .end(function() {
                 mockRequest.post('/marques')
                     .send({
-                        name: 'marquesName2',
-                        description: 'marquesDescription2'
+                        name: 'marqueName2',
+                        description: 'marqueName2'
                     })
                     .end(function(err, res) {
                         var resContent = JSON.parse(res.text);
@@ -93,14 +93,14 @@ describe('Marques:Create', function() {
 
         mockRequest.post('/marques')
             .send({
-                name: 'marquesName1',
-                description: 'marquesDescription1'
+                name: 'marqueName1',
+                description: 'marqueName1'
             })
             .end(function() {
                 mockRequest.post('/marques')
                     .send({
-                        name: 'marquesName1',
-                        description: 'marquesDescription2'
+                        name: 'marqueName1',
+                        description: 'marqueName2'
                     })
                     .end(function(err, res) {
                         var resContent = JSON.parse(res.text);

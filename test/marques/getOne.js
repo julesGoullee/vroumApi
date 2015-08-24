@@ -5,12 +5,12 @@ var mongoose = require('mongoose');
 
 describe('Marques:GetOne', function() {
     var _mockMarques1 = {
-        name: 'marquesName1',
-        description: 'marquesDescription1'
+        name: 'marqueName1',
+        description: 'marqueDescription1'
     };
     var _mockMarques2 = {
-        name: 'marquesName2',
-        description: 'marquesDescription2'
+        name: 'marqueName2',
+        description: 'marqueDescription2'
     };
     
     beforeEach(function(done) {

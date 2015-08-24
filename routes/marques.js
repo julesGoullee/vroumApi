@@ -30,7 +30,7 @@ router.get('/:id', function (req, res, next) {
                 });
             }
             else {
-                debug('PUT ' + errBdd);
+                debug('GetOne ' + errBdd);
                 var err = new Error(errBdd);
                 res.status(500);
                 next(err);
@@ -60,7 +60,7 @@ router.get('/', function(req, res, next) {
             });
         }
         else {
-            debug('GET ' + errBdd);
+            debug('GetAll ' + errBdd);
             var err = new Error(errBdd);
             res.status(500);
             next(err);

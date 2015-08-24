@@ -4,13 +4,13 @@ var mockgoose = require('mockgoose');
 
 describe('Marques:GetAll', function() {
     var _mockMarques1 = {
-        name: 'marquesName1',
+        name: 'marqueName1',
         description: 'marquesDescription1'
     };
     
     var _mockMarques2 = {
         name: 'marquesName2',
-        description: 'marquesDescription2'
+        description: 'marqueDescription2'
     };
     
     beforeEach(function(done) {

@@ -6,12 +6,12 @@ var mongoose = require('mongoose');
 
 describe('Marques:Update', function() {
     var _mockMarques1 = {
-        name: 'marquesName1',
-        description: 'marquesDescription1'
+        name: 'marqueName1',
+        description: 'marqueDescription1'
     };
     var _mockMarques2 = {
-        name: 'marquesName2',
-        description: 'marquesDescription2'
+        name: 'marqueName2',
+        description: 'marqueDescription2'
     };
 
     beforeEach(function(done) {
@@ -30,8 +30,8 @@ describe('Marques:Update', function() {
 
                 mockRequest.put('/marques/' + marque1._id)
                     .send({
-                        name: 'marquesName1Updated1',
-                        description: 'marquesDescription1Updated1'
+                        name: 'marqueName1Updated1',
+                        description: 'marqueName1Updated1'
                     })
                     .end(function(err, res) {
                         var resContent = JSON.parse(res.text);
@@ -44,8 +44,8 @@ describe('Marques:Update', function() {
                                 var resContent = JSON.parse(res.text);
                                 expect(res.statusCode).to.equal(200);
                                 expect(resContent.code).to.equal(200);
-                                expect(resContent.data.name).to.equal('marquesName1Updated1');
-                                expect(resContent.data.description).to.equal('marquesDescription1Updated1');
+                                expect(resContent.data.name).to.equal('marqueName1Updated1');
+                                expect(resContent.data.description).to.equal('marqueName1Updated1');
                                 //expect(resContent.data.modified).not.to.equal(resContent.data.modified);
                                 //TODO fakeTime && test modifed time
                                 expect(resContent.data.version).to.equal(1);
@@ -63,8 +63,8 @@ describe('Marques:Update', function() {
 
                 mockRequest.put('/marques/' + marque1._id)
                     .send({
-                        name: 'marquesName1Updated1',
-                        description: 'marquesDescription1Updated1'
+                        name: 'marqueName1Updated1',
+                        description: 'marqueName1Updated1'
                     })
                     .end(function(err, res) {
                         var resContent = JSON.parse(res.text);
@@ -77,13 +77,13 @@ describe('Marques:Update', function() {
                                 var resContent = JSON.parse(res.text);
                                 expect(res.statusCode).to.equal(200);
                                 expect(resContent.code).to.equal(200);
-                                expect(resContent.data.name).to.equal('marquesName1Updated1');
-                                expect(resContent.data.description).to.equal('marquesDescription1Updated1');
+                                expect(resContent.data.name).to.equal('marqueName1Updated1');
+                                expect(resContent.data.description).to.equal('marqueName1Updated1');
                                 expect(resContent.data.version).to.equal(1);
                                 mockRequest.put('/marques/' + marque1._id)
                                     .send({
-                                        name: 'marquesName1Updated2',
-                                        description: 'marquesDescription1Updated2'
+                                        name: 'marqueName1Updated2',
+                                        description: 'marqueDescription1Updated2'
                                     })
                                     .end(function(err, res) {
                                         var resContent = JSON.parse(res.text);
@@ -96,8 +96,8 @@ describe('Marques:Update', function() {
                                                 var resContent = JSON.parse(res.text);
                                                 expect(res.statusCode).to.equal(200);
                                                 expect(resContent.code).to.equal(200);
-                                                expect(resContent.data.name).to.equal('marquesName1Updated2');
-                                                expect(resContent.data.description).to.equal('marquesDescription1Updated2');
+                                                expect(resContent.data.name).to.equal('marqueName1Updated2');
+                                                expect(resContent.data.description).to.equal('marqueDescription1Updated2');
                                                 expect(resContent.data.version).to.equal(2);
                                                 done();
                                             });
@@ -113,8 +113,8 @@ describe('Marques:Update', function() {
 
         mockRequest.put('/marques/' + invalidMongoId)
             .send({
-                name: 'marquesName1Updated1',
-                description: 'marquesDescription1Updated1'
+                name: 'marqueName1Updated1',
+                description: 'marqueName1Updated1'
             })
             .end(function (err, res) {
                 var resContent = JSON.parse(res.text);
@@ -132,8 +132,8 @@ describe('Marques:Update', function() {
 
         mockRequest.put('/marques/' + invalidMongoId)
             .send({
-                name: 'marquesName1Updated1',
-                description: 'marquesDescription1Updated1'
+                name: 'marqueName1Updated1',
+                description: 'marqueName1Updated1'
             })
             .end(function (err, res) {
                 var resContent = JSON.parse(res.text);
@@ -162,8 +162,8 @@ describe('Marques:Update', function() {
 
                     mockRequest.put('/marques/' + marque1._id)
                         .send({
-                            name: 'marquesName1Updated1',
-                            description: 'marquesDescription1Updated1'
+                            name: 'marqueName1Updated1',
+                            description: 'marqueName1Updated1'
                         })
                         .end(function(err, res) {
                             var resContent = JSON.parse(res.text);
@@ -176,8 +176,8 @@ describe('Marques:Update', function() {
                                     var resContent = JSON.parse(res.text);
                                     expect(res.statusCode).to.equal(200);
                                     expect(resContent.code).to.equal(200);
-                                    expect(resContent.data.name).to.equal('marquesName1Updated1');
-                                    expect(resContent.data.description).to.equal('marquesDescription1Updated1');
+                                    expect(resContent.data.name).to.equal('marqueName1Updated1');
+                                    expect(resContent.data.description).to.equal('marqueName1Updated1');
                                     expect(resContent.data.version).to.equal(1);
                                     done();
                                 });
@@ -192,8 +192,8 @@ describe('Marques:Update', function() {
                     var marque1 = JSON.parse(res.text).data[0];
                     mockRequest.put('/marques/' + marque1._id)
                         .send({
-                            name: 'marquesName2',
-                            description: 'marquesDescription1Updated1'
+                            name: 'marqueName2',
+                            description: 'marqueName1Updated1'
                         })
                         .end(function(err, res) {
 

@@ -133,10 +133,10 @@
        version: Number(Number update revision) 
      }
      ```
- GetAll marques:
+ GetAll vehicule:
    
   * Method: GET
-  * URL /marques
+  * URL /vehicules
   
       ```bash
       curl -i
@@ -148,7 +148,7 @@
   Create one vehicule
     
   * Method: POST
-  * URL: /marques
+  * URL: /vehicules
   * PARAMS: 
   
       ```javascript
@@ -169,7 +169,7 @@
           "description": "descriptionVehicule1",
           "years": "2009"
          }'
-         https://vroumapi.herokuapp.com/vehicule
+         https://vroumapi.herokuapp.com/vehicules
       ```
   
   GetOne vehicule

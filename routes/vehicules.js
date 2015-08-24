@@ -17,6 +17,42 @@ function isInt( number ){
         parseInt(number) > 0;
 }
 
+//GET ONE
+router.get('/:id', function (req, res, next) {
+    if (req.params && isValidFormatId(req.params.id) ) {
+
+        VehiculeModel.findById(req.params.id, function (errBdd, vehicule) {
+            if (vehicule === null) {
+                res.status(404);
+                res.json({
+                    code: res.statusCode,
+                    data: 'Vehicule Not found'
+                });
+            }
+            else if (!errBdd) {
+                res.status(200);
+                res.json({
+                    code: res.statusCode,
+                    data: vehicule
+                });
+            }
+            else {
+                debug('GetOne ' + errBdd);
+                var err = new Error(errBdd);
+                res.status(500);
+                next(err);
+            }
+        });
+    }
+    else {
+        res.status(400);
+        res.json({
+            code: res.statusCode,
+            data: 'Id params format incorrect'
+        });
+    }
+});
+
 //GET ALL
 router.get('/', function(req, res, next) {
     VehiculeModel.find(function (errBdd, vehicules) {
@@ -31,7 +67,7 @@ router.get('/', function(req, res, next) {
             });
         }
         else {
-            debug('GET ' + errBdd);
+            debug('GetAll ' + errBdd);
             var err = new Error(errBdd);
             res.status(500);
             next(err);

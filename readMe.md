@@ -87,7 +87,7 @@
       curl -i 
         -H "Accept: application/json"
         -H "Content-Type: application/json" 
-        -X GET https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f
+        -X GET https://vroumapi.herokuapp.com/marques/{{marque._id}}
       ```
       
   Update marque
@@ -103,7 +103,7 @@
           "name": "marque1Update1",
           "description": "descriptionMarque1Update1"
         }'
-        https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f
+        https://vroumapi.herokuapp.com/marques/{{marque._id}}
       ```
         
   Delete one marque
@@ -115,7 +115,7 @@
       curl -i 
         -H "Accept: application/json" 
         -H "Content-Type: application/json" 
-        -X DELETE https://vroumapi.herokuapp.com/marques/55d471678bd0f3110018aa0f
+        -X DELETE https://vroumapi.herokuapp.com/marques/{{marque._id}}
       ```
  
  C. Vehicule
@@ -156,8 +156,7 @@
         "name": String,
         "description": String,
         "year": Number,
-        "marqueId": ObjectIdMongo(Ref: Marque ObjectId),
-        "modified": Date(automatique last modified date),
+        "marqueId": ObjectIdMongo(Ref: Marque ObjectId)
       }
       ```
       
@@ -172,3 +171,15 @@
          }'
          https://vroumapi.herokuapp.com/vehicule
       ```
+  
+  GetOne vehicule
+    
+    * Method: GET
+    * URL: /vehicules/{{vehicule._id}}
+    
+        ```bash
+        curl -i 
+          -H "Accept: application/json"
+          -H "Content-Type: application/json" 
+          -X GET https://vroumapi.herokuapp.com/vehicules/{{marque._id}}
+        ```

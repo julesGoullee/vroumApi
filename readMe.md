@@ -94,7 +94,15 @@
   
   * Method: PUT
   * URL: /marques/{{marque._id}}
-
+  * PARAMS:
+  
+      ```javascript
+      {
+        "name": String,
+        "description": String
+      }
+      ```
+      
       ```bash
       curl -i 
         -H "Accept: application/json" 
@@ -167,7 +175,8 @@
         -X POST -d '{
           "name": "vehicule1",
           "description": "descriptionVehicule1",
-          "years": "2009"
+          "years": "2009",
+          "marqueId":{{marque._id}}
          }'
          https://vroumapi.herokuapp.com/vehicules
       ```
@@ -183,4 +192,43 @@
         -H "Content-Type: application/json" 
         -X GET https://vroumapi.herokuapp.com/vehicules/{{marque._id}}
       ```
+  Update vehicule:
+    
+  * Method: PUT
+  * URL: /vehicules/{{vehicule._id}}
+  * PARAMS:
+    
+        ```javascript
+        {
+          "name": String,
+          "description": String,
+           "years": "2009",
+           "marqueId":{{marque._id}}
+        }
+        ```
+        
+        ```bash
+        curl -i 
+          -H "Accept: application/json" 
+          -H "Content-Type: application/json" 
+          -X PUT -d '{ 
+            "name": "vehicule1Update1",
+            "description": "descriptionVehicule1Update1",
+            "years": "2009",
+            "marqueId":{{vehicule._id}}
+          }'
+          https://vroumapi.herokuapp.com/vehicules/{{vehicule._id}}
+        ```
+          
+  Delete one vehicule:
   
+  * Method: DELETE
+  * URL: /vehicules/{{vehicule._id}}
+    
+        ```bash
+        curl -i 
+          -H "Accept: application/json" 
+          -H "Content-Type: application/json" 
+          -X DELETE https://vroumapi.herokuapp.com/vehicules/{{vehicule._id}}
+        ```
+        

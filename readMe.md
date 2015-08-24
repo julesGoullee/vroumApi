@@ -54,7 +54,7 @@
          -X GET https://vroumapi.herokuapp.com/marques
       ```
 
-  Create one marque
+  Create one marque:
     
   * Method: POST
   * URL: /marques
@@ -78,7 +78,7 @@
          https://vroumapi.herokuapp.com/marques
       ```
        
-  GetOne marque
+  GetOne marque:
   
   * Method: GET
   * URL: /marques/{{marque._id}}
@@ -90,7 +90,7 @@
         -X GET https://vroumapi.herokuapp.com/marques/{{marque._id}}
       ```
       
-  Update marque
+  Update marque:
   
   * Method: PUT
   * URL: /marques/{{marque._id}}
@@ -145,11 +145,11 @@
          -X GET https://vroumapi.herokuapp.com/vehicules
       ```
 
-  Create one vehicule
+  Create one vehicule:
     
   * Method: POST
   * URL: /vehicules
-  * PARAMS: 
+  * PARAMS:
   
       ```javascript
       {
@@ -172,14 +172,15 @@
          https://vroumapi.herokuapp.com/vehicules
       ```
   
-  GetOne vehicule
+  GetOne vehicule:
     
-    * Method: GET
-    * URL: /vehicules/{{vehicule._id}}
+  * Method: GET
+  * URL: /vehicules/{{vehicule._id}}
     
-        ```bash
-        curl -i 
-          -H "Accept: application/json"
-          -H "Content-Type: application/json" 
-          -X GET https://vroumapi.herokuapp.com/vehicules/{{marque._id}}
-        ```
+      ```bash
+      curl -i 
+        -H "Accept: application/json"
+        -H "Content-Type: application/json" 
+        -X GET https://vroumapi.herokuapp.com/vehicules/{{marque._id}}
+      ```
+  

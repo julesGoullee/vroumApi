@@ -215,4 +215,42 @@ router.put('/:id', function(req, res, next){
         });
     }
 });
+
+//DELETE
+router.delete('/:id', function (req, res, next) {
+    if (req.params && isValidFormatId(req.params.id) ) {
+
+        VehiculeModel.findByIdAndRemove(req.params.id, function (errBdd, vehicule) {
+            if (vehicule === null) {
+                res.status(404);
+                res.json({
+                    code: res.statusCode,
+                    data: 'Id vehicule Not found'
+                });
+            }
+            else if (!errBdd) {
+                res.status(200);
+                res.json({
+                    code: res.statusCode,
+                    data: 'Deleted vehicule'
+                });
+            }
+            else {
+                debug('DELETE ' + errBdd);
+                var err = new Error(errBdd);
+                res.status(500);
+                next(err);
+            }
+        });
+    }
+    else {
+        res.status(400);
+        res.json({
+            code: res.statusCode,
+            data: 'Id params format incorrect'
+        });
+    }
+});
+
+
 module.exports = router;

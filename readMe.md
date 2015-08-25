@@ -92,6 +92,16 @@ API JSON restful nodejs (express, mongoose), mongoDB
         -X GET https://vroumapi.herokuapp.com/marques/{{marque._id}}
       ```
       
+  * Include query:
+      -Vehicule(embed vehiculesModel array)
+      
+      ```bash
+      curl -i 
+        -H "Accept: application/json"
+        -H "Content-Type: application/json" 
+        -X GET https://vroumapi.herokuapp.com/marques/{{marque._id}}?include=vehicule
+      ```
+            
   Update marque:
   
   * Method: PUT

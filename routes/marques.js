@@ -3,6 +3,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var router = express.Router({ params: 'inherit' });
 var debug = require('debug')('vroumApi:db:marques');
+var q = require('q');
 
 var MarqueModel = require('../models/marque');
 var VehiculeModel = require('../models/vehicule');
@@ -14,8 +15,26 @@ function isValidFormatId(id) {
 //GET ONE
 router.get('/:id', function (req, res, next) {
     if (req.params && isValidFormatId(req.params.id) ) {
+        
+        var promiseRequestBdd = [];
+        
+        promiseRequestBdd.push(MarqueModel.findById(req.params.id).exec());
 
-        MarqueModel.findById(req.params.id, function (errBdd, marque) {
+        if (req.query && req.query.include && req.query.include.indexOf('vehicules') !== -1 ) {
+            promiseRequestBdd.push(VehiculeModel.find({marqueId: req.params.id},{marqueId: 0}).exec());
+        }
+        else{
+            res.status(400);
+            res.json({
+                code: res.statusCode,
+                data: 'Include params incorrect'
+            });
+        }   
+        
+        q.all(promiseRequestBdd).then(function(resMongo) {
+            var marque = resMongo[0];
+            var vehicule = resMongo[1];
+            
             if (marque === null) {
                 res.status(404);
                 res.json({
@@ -23,19 +42,23 @@ router.get('/:id', function (req, res, next) {
                     data: 'Marque Not found'
                 });
             }
-            else if (!errBdd) {
-                res.status(200);
-                res.json({
-                    code: res.statusCode,
-                    data: marque
-                });
-            }
             else {
-                debug('GetOne ' + errBdd);
-                var err = new Error(errBdd);
-                res.status(500);
-                next(err);
+                var resJson = {
+                    code: res.statusCode,
+                    data: marque.toJSON()
+                };
+                
+                if (vehicule !== undefined) {
+                    resJson.data.vehicules = vehicule;
+                }
+                res.status(200);
+                res.json(resJson);
             }
+        },function(errBdd){
+            debug('GetOne ' + errBdd);
+            var err = new Error(errBdd);
+            res.status(500);
+            next(err);
         });
     }
     else {

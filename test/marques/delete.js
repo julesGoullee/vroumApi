@@ -4,10 +4,10 @@ var mockgoose = require('mockgoose');
 describe('Marques:Delete',function(){
     var _mockMarques1 = {
         name: 'marqueName1',
-        description: 'marquesDescription1'
+        description: 'marqueDescription1'
     };
     var _mockMarques2 = {
-        name: 'marquesName2',
+        name: 'marqueName2',
         description: 'marqueDescription2'
     };
     beforeEach(function(done) {
@@ -30,7 +30,7 @@ describe('Marques:Delete',function(){
                         var resContent = JSON.parse(res.text);
                         expect(res.statusCode).to.equal(200);
                         expect(resContent.code).to.equal(200);
-                        expect(resContent.data).to.equal('Delete');
+                        expect(resContent.data).to.equal('Deleted marque');
                         mockRequest.get('/marques/' + marque1._id)
                             .end(function(err, res) {
                                 var resContent = JSON.parse(res.text);
@@ -82,7 +82,7 @@ describe('Marques:Delete',function(){
                 });
         });
 
-        it('Should delete the first marques of several marques by _id', function(done) {
+        it('Should delete the first marque of several marques by _id', function(done) {
 
             mockRequest.get('/marques')
                 .end(function(err, res) {
@@ -93,7 +93,7 @@ describe('Marques:Delete',function(){
                             var resContent = JSON.parse(res.text);
                             expect(res.statusCode).to.equal(200);
                             expect(resContent.code).to.equal(200);
-                            expect(resContent.data).to.equal('Delete');
+                            expect(resContent.data).to.equal('Deleted marque');
                             mockRequest.get('/marques/' + marque1._id)
                                 .end(function(err, res) {
                                     var resContent = JSON.parse(res.text);

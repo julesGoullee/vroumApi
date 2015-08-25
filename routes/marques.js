@@ -193,7 +193,7 @@ router.delete('/:id', function (req, res, next) {
                 res.status(200);
                 res.json({
                     code: res.statusCode,
-                    data: 'Delete'
+                    data: 'Deleted marque'
                 });
             }
             else {

@@ -108,6 +108,99 @@ describe('Marques:Delete',function(){
 
     });
     
+    describe('With vehicules', function(){
+        var _mockVehicule1;
+        var _marque;
+        
+        beforeEach(function(done) {
+            mockRequest.post('/marques')
+                .send(_mockMarques1)
+                .end(function() {
+                    mockRequest.get('/marques')
+                        .end(function (err, res) {
+                            var resContent = JSON.parse(res.text);
+                            _marque = resContent.data[0];
+                            _mockVehicule1 = {
+                                name: 'vehiculeName1',
+                                description: 'vehiculeDescription1',
+                                year: '2007',
+                                marqueId: _marque._id
+                            };
+        
+                            mockRequest.post('/vehicules')
+                                .send(_mockVehicule1)
+                                .end(function () {
+                                    done();
+                                });
+                        });
+            });
+        });
+        
+        it('Should not remove marque if contains one vehicule', function(done){
+            mockRequest.delete('/marques/' + _marque._id)
+                .end(function (err, res) {
+                    var resContent = JSON.parse(res.text);
+                    expect(res.statusCode).to.equal(400);
+                    expect(resContent.code).to.equal(400);
+                    expect(resContent.data).to.equal('Connot deleted marque with one or more vehicule. Actual: 1.');
+                    done();
+                });
+        });
+
+        it('Should not remove marque if contains two vehicules', function(done){
+            _mockVehicule1 = {
+                name: 'vehiculeName2',
+                description: 'vehiculeDescription2',
+                year: '2000',
+                marqueId: _marque._id
+            };
+
+            mockRequest.post('/vehicules')
+                .send(_mockVehicule1)
+                .end(function () {
+                    mockRequest.delete('/marques/' + _marque._id)
+                        .end(function (err, res) {
+                            var resContent = JSON.parse(res.text);
+                            expect(res.statusCode).to.equal(400);
+                            expect(resContent.code).to.equal(400);
+                            expect(resContent.data).to.equal('Connot deleted marque with one or more vehicule. Actual: 2.');
+                            done();
+                        });
+                });
+            
+        });
+
+        it('Should remove marque was vehicule', function(done){
+
+            mockRequest.get('/vehicules')
+                .end(function (err, res) {
+                    var resContent = JSON.parse(res.text);
+                    var vehicule = resContent.data[0];
+                    
+                    mockRequest.delete('/vehicules/' + vehicule._id)
+                        .end(function (err, res) {
+                            var resContent = JSON.parse(res.text);
+                            expect(res.statusCode).to.equal(200);
+                            expect(resContent.code).to.equal(200);
+                            expect(resContent.data).to.equal('Deleted vehicule');
+                            mockRequest.delete('/marques/' + _marque._id)
+                                .end(function (err, res) {
+                                    var resContent = JSON.parse(res.text);
+                                    expect(res.statusCode).to.equal(200);
+                                    expect(resContent.code).to.equal(200);
+                                    expect(resContent.data).to.equal('Deleted marque');
+                                    done();
+                                });
+                        });
+                });
+
+        });
+        
+        afterEach(function(){
+            mockgoose.reset('vehicule');
+        });
+    });
+    
     afterEach(function(){
         mockgoose.reset();
     });

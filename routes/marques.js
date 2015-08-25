@@ -5,6 +5,7 @@ var router = express.Router({ params: 'inherit' });
 var debug = require('debug')('vroumApi:db:marques');
 
 var MarqueModel = require('../models/marque');
+var VehiculeModel = require('../models/vehicule');
 
 function isValidFormatId(id) {
     return typeof id === 'string' && mongoose.Types.ObjectId.isValid(id);
@@ -179,25 +180,44 @@ router.put('/:id', function(req, res, next){
 
 //DELETE
 router.delete('/:id', function (req, res, next) {
-    //TODO not if have vehicule
     if (req.params && isValidFormatId(req.params.id) ) {
-
-        MarqueModel.findByIdAndRemove(req.params.id, function (errBdd, marque) {
-            if (marque === null) {
-                res.status(404);
-                res.json({
-                    code: res.statusCode,
-                    data: 'Id marque Not found'
-                });
+        
+        VehiculeModel.find({marqueId: req.params.id}, function(errBdd, vehicules){
+            console.log();
+            if(!errBdd){
+                if(vehicules.length === 0){
+                    MarqueModel.findByIdAndRemove(req.params.id, function (errBdd, marque) {
+                        if (marque === null) {
+                            res.status(404);
+                            res.json({
+                                code: res.statusCode,
+                                data: 'Id marque Not found'
+                            });
+                        }
+                        else if (!errBdd) {
+                            res.status(200);
+                            res.json({
+                                code: res.statusCode,
+                                data: 'Deleted marque'
+                            });
+                        }
+                        else {
+                            debug('DELETE ' + errBdd);
+                            var err = new Error(errBdd);
+                            res.status(500);
+                            next(err);
+                        }
+                    });
+                }
+                else{
+                    res.status(400);
+                    res.json({
+                        code: res.statusCode,
+                        data: 'Connot deleted marque with one or more vehicule. Actual: ' + vehicules.length + '.'
+                    });
+                }
             }
-            else if (!errBdd) {
-                res.status(200);
-                res.json({
-                    code: res.statusCode,
-                    data: 'Deleted marque'
-                });
-            }
-            else {
+            else{
                 debug('DELETE ' + errBdd);
                 var err = new Error(errBdd);
                 res.status(500);

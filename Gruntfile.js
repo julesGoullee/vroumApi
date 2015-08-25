@@ -29,24 +29,26 @@ module.exports = function(grunt) {
                     'bin/*.js',
                     'app.js',
                     'test/**/*.js',
-                    'gruntfile.js'
+                    'Gruntfile.js'
                 ],
                 tasks: [
+                    'complexity:all',
                     'mochaTest',
                     'jshint:all'
                 ]
             },
-            jshint:{
+            codeAnalyzer:{
                 files: [
                     'models/**/*.js',
                     'routes/**/*.js',
                     'bin/*.js',
                     'app.js',
                     'test/**/*.js',
-                    'gruntfile.js'
+                    'Gruntfile.js'
                 ],
                 tasks: [
-                    'jshint:all'
+                    'jshint:all',
+                    'complexity:all'
                 ]
             }
         },
@@ -64,22 +66,43 @@ module.exports = function(grunt) {
                     'test/**/*.js'
                 ]
             }
+        },
+        complexity: {
+            all: {
+                src: [
+                    'models/**/*.js',
+                    'routes/**/*.js',
+                    'bin/*.js',
+                    'app.js',
+                    'test/**/*.js'
+                ],
+                options: {
+                    breakOnErrors: true,
+                    errorsOnly: false,               // show only maintainability errors
+                    cyclomatic: [5, 7, 12],
+                    halstead: [20, 40, 50],
+                    maintainability: 75,
+                    hideComplexFunctions: false,     // only display maintainability
+                    broadcast: true                  // broadcast data over event-bus
+                }
+            }
         }
     });
-
+    
     grunt.registerTask('codeAnalyzer',function(){
         grunt.option('force', true);
-        grunt.task.run(['jshint:all','watch:jshint']);
+        grunt.task.run(['jshint:all','complexity:all','watch:codeAnalyzer']);
     });
 
     grunt.registerTask('tdd', function(){
         grunt.option('force', true);
         grunt.task.run([
-            'mochaTest',
             'jshint:all',
+            'complexity:all',
+            'mochaTest',
             'watch:all'
         ]);
     });
 
-    grunt.registerTask('travis', ['mochaTest','jshint:all']);
+    grunt.registerTask('travis', ['mochaTest','jshint:all','complexity:all']);
 };

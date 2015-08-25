@@ -9,7 +9,7 @@ describe('VehiculeModel:Update', function() {
     var _mockVehicule1;
     var _mockVehicule2;
     
-    beforeEach(function(done){
+    beforeEach(function(done) {
         mockRequest.post('/marques')
             .send({
                 name: 'marqueName1',
@@ -17,7 +17,7 @@ describe('VehiculeModel:Update', function() {
             })
             .end(function() {
                 mockRequest.get('/marques')
-                    .end(function(err, res){
+                    .end(function(err, res) {
                         var resContent = JSON.parse(res.text);
                         _marque1 = resContent.data[0];
                         _mockVehicule1 = {
@@ -324,7 +324,7 @@ describe('VehiculeModel:Update', function() {
         var _mockVehicule3;
         var _marque2;
         
-        beforeEach(function(done){
+        beforeEach(function(done) {
             mockRequest.post('/marques')
                 .send({
                     name: 'marqueName2',
@@ -332,7 +332,7 @@ describe('VehiculeModel:Update', function() {
                 })
                 .end(function() {
                     mockRequest.get('/marques')
-                        .end(function(err, res){
+                        .end(function(err, res) {
                             var resContent = JSON.parse(res.text);
                             _marque2 = resContent.data[1];
                             _mockVehicule3 = {

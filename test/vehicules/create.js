@@ -4,7 +4,7 @@ var mockgoose = require('mockgoose');
 describe('VehiculeModel:Create', function() {
 
     var _marque;
-    beforeEach(function(done){
+    beforeEach(function(done) {
         mockRequest.post('/marques')
             .send({
                 name: 'marqueName11',
@@ -12,7 +12,7 @@ describe('VehiculeModel:Create', function() {
             })
             .end(function() {
                 mockRequest.get('/marques')
-                    .end(function(err, res){
+                    .end(function(err, res) {
                         var resContent = JSON.parse(res.text);
                         _marque = resContent.data[0];
                         done();

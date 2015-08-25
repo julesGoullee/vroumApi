@@ -136,7 +136,7 @@ describe('Marques:Delete',function(){
             });
         });
         
-        it('Should not remove marque if contains one vehicule', function(done){
+        it('Should not remove marque if contains one vehicule', function(done) {
             mockRequest.delete('/marques/' + _marque._id)
                 .end(function (err, res) {
                     var resContent = JSON.parse(res.text);
@@ -147,7 +147,7 @@ describe('Marques:Delete',function(){
                 });
         });
 
-        it('Should not remove marque if contains two vehicules', function(done){
+        it('Should not remove marque if contains two vehicules', function(done) {
             _mockVehicule1 = {
                 name: 'vehiculeName2',
                 description: 'vehiculeDescription2',
@@ -170,7 +170,7 @@ describe('Marques:Delete',function(){
             
         });
 
-        it('Should remove marque was vehicule', function(done){
+        it('Should remove marque was vehicule', function(done) {
 
             mockRequest.get('/vehicules')
                 .end(function (err, res) {
@@ -183,6 +183,7 @@ describe('Marques:Delete',function(){
                             expect(res.statusCode).to.equal(200);
                             expect(resContent.code).to.equal(200);
                             expect(resContent.data).to.equal('Deleted vehicule');
+                            
                             mockRequest.delete('/marques/' + _marque._id)
                                 .end(function (err, res) {
                                     var resContent = JSON.parse(res.text);

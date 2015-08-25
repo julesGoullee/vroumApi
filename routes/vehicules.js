@@ -19,7 +19,7 @@ function isInt( number ){
 
 //GET ONE
 router.get('/:id', function (req, res, next) {
-    if (req.params && isValidFormatId(req.params.id) ) {
+    if (req.params && isValidFormatId(req.params.id)) {
 
         VehiculeModel.findById(req.params.id, function (errBdd, vehicule) {
             if (vehicule === null) {
@@ -54,7 +54,7 @@ router.get('/:id', function (req, res, next) {
 });
 
 //GET ALL
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     VehiculeModel.find(function (errBdd, vehicules) {
 
         if (!errBdd) {
@@ -76,7 +76,7 @@ router.get('/', function(req, res, next) {
 });
 
 //CREATE
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
 
     if (req.body && req.body.name && req.body.description && req.body.marqueId && req.body.year &&
         isValidFormatId(req.body.marqueId) && isInt(req.body.year)) {
@@ -142,7 +142,7 @@ router.post('/', function(req, res, next) {
 });
 
 //UPDATE
-router.put('/:id', function(req, res, next){
+router.put('/:id', function (req, res, next){
     if (req.body && req.body.name && req.body.description && req.body.marqueId && req.body.year &&
         isValidFormatId(req.body.marqueId) && isValidFormatId(req.params.id) && isInt(req.body.year)) {
 
@@ -190,7 +190,7 @@ router.put('/:id', function(req, res, next){
                                     data: 'Vehicule name already exist, it will unique'
                                 });
                             }
-                            else{
+                            else {
                                 debug('PUT ' + errBdd);
                                 var err = new Error(errBdd);
                                 res.status(500);
@@ -218,7 +218,7 @@ router.put('/:id', function(req, res, next){
 
 //DELETE
 router.delete('/:id', function (req, res, next) {
-    if (req.params && isValidFormatId(req.params.id) ) {
+    if (req.params && isValidFormatId(req.params.id)) {
 
         VehiculeModel.findByIdAndRemove(req.params.id, function (errBdd, vehicule) {
             if (vehicule === null) {

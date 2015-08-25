@@ -48,7 +48,7 @@ router.get('/:id', function (req, res, next) {
 });
 
 //GET ALL
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     MarqueModel.find(function (errBdd, marques) {
 
         if (!errBdd) {
@@ -70,7 +70,7 @@ router.get('/', function(req, res, next) {
 });
 
 //CREATE
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
 
     if (req.body && req.body.name && req.body.description) {
         var marque = new MarqueModel({
@@ -116,12 +116,12 @@ router.post('/', function(req, res, next) {
 });
 
 //UPDATE
-router.put('/:id', function(req, res, next){
+router.put('/:id', function (req, res, next) {
     if (req.params && isValidFormatId(req.params.id) ) {
-        if (req.body && req.body.name && req.body.description){
+        if (req.body && req.body.name && req.body.description) {
             MarqueModel.findOneAndUpdate({_id: req.params.id},
             {
-                $set:{
+                $set: {
                     name: req.body.name,
                     description: req.body.description,
                     modified: Date.now()
@@ -182,10 +182,9 @@ router.put('/:id', function(req, res, next){
 router.delete('/:id', function (req, res, next) {
     if (req.params && isValidFormatId(req.params.id) ) {
         
-        VehiculeModel.find({marqueId: req.params.id}, function(errBdd, vehicules){
-            console.log();
-            if(!errBdd){
-                if(vehicules.length === 0){
+        VehiculeModel.find({marqueId: req.params.id}, function (errBdd, vehicules){
+            if (!errBdd) {
+                if (vehicules.length === 0) {
                     MarqueModel.findByIdAndRemove(req.params.id, function (errBdd, marque) {
                         if (marque === null) {
                             res.status(404);

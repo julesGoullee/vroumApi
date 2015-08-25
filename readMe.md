@@ -8,7 +8,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
 
 ---
 
-2. TEST:
+1. TEST:
 
   Coverage: [![Build Status](https://travis-ci.org/julesGoullee/vroumApi.svg)](https://travis-ci.org/julesGoullee/vroumApi)
   
@@ -16,7 +16,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
 
 ---
     
-3. Request
+1. Request
 
   A. Status
   

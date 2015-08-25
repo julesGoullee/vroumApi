@@ -179,6 +179,7 @@ router.put('/:id', function(req, res, next){
 
 //DELETE
 router.delete('/:id', function (req, res, next) {
+    //TODO not if have vehicule
     if (req.params && isValidFormatId(req.params.id) ) {
 
         MarqueModel.findByIdAndRemove(req.params.id, function (errBdd, marque) {

@@ -141,4 +141,78 @@ router.post('/', function(req, res, next) {
 
 });
 
+//UPDATE
+router.put('/:id', function(req, res, next){
+    if (req.body && req.body.name && req.body.description && req.body.marqueId && req.body.year &&
+        isValidFormatId(req.body.marqueId) && isValidFormatId(req.params.id) && isInt(req.body.year)) {
+
+        MarqueModel.findById(req.body.marqueId, function (errBdd, marque) {
+            if (marque === null) {
+                res.status(400);
+                res.json({
+                    code: res.statusCode,
+                    data: 'MarqueId Not found'
+                });
+            }
+            else if (!errBdd) {
+                VehiculeModel.findOneAndUpdate({_id: req.params.id},
+                    {
+                        $set:{
+                            name: req.body.name,
+                            description: req.body.description,
+                            marqueId: req.body.marqueId,
+                            year: parseInt(req.body.year),
+                            modified: Date.now()
+                        },
+                        $inc: {
+                            version: 1
+                        }
+                    },{ upsert: false },function (errBdd, marque) {
+                        if (marque === null) {
+                            res.status(404);
+                            res.json({
+                                code: res.statusCode,
+                                data: 'Id vehicule Not found'
+                            });
+                        }
+                        else if (!errBdd) {
+                            res.status(200);
+                            res.json({
+                                code: res.statusCode,
+                                data: 'Updated vehicule'
+                            });
+                        }
+                        else {
+                            if (errBdd.code === 11001) {
+                                res.status(409);
+                                res.json({
+                                    code: res.statusCode,
+                                    data: 'Vehicule name already exist, it will unique'
+                                });
+                            }
+                            else{
+                                debug('PUT ' + errBdd);
+                                var err = new Error(errBdd);
+                                res.status(500);
+                                next(err);
+                            }
+                        }
+                    });
+            }
+            else {
+                debug('PUT ' + errBdd);
+                var err = new Error(errBdd);
+                res.status(500);
+                next(err);
+            }
+        });
+    }
+    else {
+        res.status(400);
+        res.json({
+            code: res.statusCode,
+            data: 'Missing/incorrect params name(String), description(String), marqueId(mongoObjectId), year(Int)'
+        });
+    }
+});
 module.exports = router;

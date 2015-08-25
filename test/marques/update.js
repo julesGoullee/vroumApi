@@ -202,15 +202,17 @@ describe('Marques:Update', function() {
                             expect(resContent.code).to.equal(200);
 
                             expect(resContent.data).to.equal('Updated marque');
-                            mockRequest.get('/marques')
-                                .end(function() {
-                                    //TODO mockgoose not suppported index unique :'(
+                            //TODO mockgoose not suppported index unique :'(
 
+                            //mockRequest.get('/marques')
+                            //    .end(function(err, res) {
+                                    //var resContent = JSON.parse(res.text);
+                                    //console.log(resContent);
                                     //expect(res.statusCode).to.equal(409);
                                     //expect(resContent.code).to.equal(409);
                                     //expect(resContent.data[0].name).not.to.equal(resContent.data[1].name);
                                     done();
-                                });
+                                //});
                         });
                 });
         });
@@ -229,9 +231,11 @@ describe('Marques:Update', function() {
                             expect(res.statusCode).to.equal(200);
 
                             expect(resContent.data.name).to.equal(marque2.name);
+                            expect(resContent.data.description).to.equal(marque2.description);
 
                             expect(resContent.data._id).to.be.a('string');
                             expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
+                            expect(resContent.data._id).to.equal(marque2._id);
 
                             expect(resContent.data.modified).to.be.a('string');
                             var modifiedDate = new Date(Date.parse(resContent.data.modified.toString()));

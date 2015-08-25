@@ -56,7 +56,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
          -X GET https://vroumapi.herokuapp.com/marques
       ```
 
-  Create one marque:
+  CreateOne marque:
     
   * Method: POST
   * URL: /marques
@@ -177,7 +177,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
         -X POST -d '{
           "name": "vehicule1",
           "description": "descriptionVehicule1",
-          "years": "2009",
+          "year": "2009",
           "marqueId":{{marque._id}}
          }'
          https://vroumapi.herokuapp.com/vehicules
@@ -192,7 +192,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
       curl -i 
         -H "Accept: application/json"
         -H "Content-Type: application/json" 
-        -X GET https://vroumapi.herokuapp.com/vehicules/{{marque._id}}
+        -X GET https://vroumapi.herokuapp.com/vehicules/{{vehicule._id}}
       ```
   Update vehicule:
     
@@ -204,7 +204,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
         {
           "name": String,
           "description": String,
-          "years": "2009",
+          "year": "2009",
           "marqueId":{{marque._id}}
         }
         ```
@@ -216,7 +216,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
           -X PUT -d '{ 
             "name": "vehicule1Update1",
             "description": "descriptionVehicule1Update1",
-            "years": "2009",
+            "year": "2009",
             "marqueId":{{vehicule._id}}
           }'
           https://vroumapi.herokuapp.com/vehicules/{{vehicule._id}}

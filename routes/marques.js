@@ -23,13 +23,6 @@ router.get('/:id', function (req, res, next) {
         if (req.query && req.query.include && req.query.include.indexOf('vehicules') !== -1 ) {
             promiseRequestBdd.push(VehiculeModel.find({marqueId: req.params.id},{marqueId: 0}).exec());
         }
-        else{
-            res.status(400);
-            res.json({
-                code: res.statusCode,
-                data: 'Include params incorrect'
-            });
-        }   
         
         q.all(promiseRequestBdd).then(function(resMongo) {
             var marque = resMongo[0];

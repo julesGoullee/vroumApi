@@ -32,9 +32,9 @@ module.exports = function(grunt) {
                     'Gruntfile.js'
                 ],
                 tasks: [
-                    'complexity:all',
                     'mochaTest',
-                    'jshint:all'
+                    'jshint:all',
+                    'complexity:all'
                 ]
             },
             codeAnalyzer:{
@@ -49,6 +49,21 @@ module.exports = function(grunt) {
                 tasks: [
                     'jshint:all',
                     'complexity:all'
+                ]
+            },
+            tdd:{
+                files: [
+                    'test/test.config.js',
+                    'models/**/*.js',
+                    'routes/**/*.js',
+                    'bin/*.js',
+                    'app.js',
+                    'test/**/*.js',
+                    'Gruntfile.js'
+                ],
+                tasks: [
+                    'mochaTest',
+                    'jshint:all'
                 ]
             }
         },
@@ -98,9 +113,9 @@ module.exports = function(grunt) {
         grunt.option('force', true);
         grunt.task.run([
             'jshint:all',
-            'complexity:all',
             'mochaTest',
-            'watch:all'
+            'complexity:all',
+            'watch:tdd'
         ]);
     });
 

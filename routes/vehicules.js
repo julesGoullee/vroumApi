@@ -30,11 +30,46 @@ router.get('/:id', function (req, res, next) {
                 });
             }
             else if (!errBdd) {
-                res.status(200);
-                res.json({
-                    code: res.statusCode,
-                    data: vehicule
-                });
+                var vehiculeJson = vehicule.toJSON();
+                
+                if (req.query && req.query.include && req.query.include.indexOf('marque') !== -1 ) {
+                    MarqueModel.findById(vehiculeJson.marqueId, function(errBdd, marque){
+                        var err;
+                        if(!errBdd){
+                            if (marque !== null && marque !== undefined && !errBdd) {
+                                vehiculeJson.marque = marque.toJSON();
+                                delete vehiculeJson.marqueId;
+                                res.status(200);
+                                res.json({
+                                    code: res.statusCode,
+                                    data: vehiculeJson
+                                });
+                            }   
+                            else{
+                                debug('GetOne not found join error');
+                                res.status(500);
+                                res.json({
+                                    code: res.statusCode,
+                                    data: 'relation one to many error'
+                                });
+                            }
+                        }
+                        else {
+                            debug('GetOne ' + errBdd);
+                            err = new Error(errBdd);
+                            res.status(500);
+                            next(err);
+                        }
+                        
+                    });
+                }
+                else {
+                    res.status(200);
+                    res.json({
+                        code: res.statusCode,
+                        data: vehiculeJson
+                    });
+                }
             }
             else {
                 debug('GetOne ' + errBdd);

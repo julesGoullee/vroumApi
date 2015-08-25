@@ -73,6 +73,36 @@ describe('Vehicule:GetOne', function() {
             });
     });
 
+    it('Should get one vehicule of one by _id with marque', function(done) {
+        mockRequest.get('/vehicules')
+            .end(function(err, res) {
+                var vehicule1 = JSON.parse(res.text).data[0];
+                mockRequest.get('/vehicules/' + vehicule1._id + '?include=marque')
+                    .end(function (err, res) {
+                        var resContent = JSON.parse(res.text);
+
+                        expect(res.statusCode).to.equal(200);
+                        expect(resContent.code).to.equal(200);
+
+                        expect(resContent.data.name).to.equal(vehicule1.name);
+
+                        expect(resContent.data._id).to.be.a('string');
+                        expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
+
+                        expect(resContent.data.marque._id).to.equal(_marque1._id);
+                        expect(mongoose.Types.ObjectId.isValid(resContent.data.marque._id)).to.equal(true);
+
+                        expect(resContent.data.modified).to.be.a('string');
+                        var modifiedDate = new Date(Date.parse(resContent.data.modified));
+                        var isValideDate = !isNaN(modifiedDate.valueOf());
+                        expect(isValideDate).to.equal(true);
+
+                        expect(resContent.data.version).to.equal(0);
+                        done();
+                    });
+            });
+    });
+    
     it('Should not get if id params invalid mongoId', function(done) {
 
         var invalidMongoId = '55d45cb57e8450722b3b7dffXX';
@@ -87,7 +117,7 @@ describe('Vehicule:GetOne', function() {
                 done();
             });
     });
-
+    
     it('Should not get if id not found', function(done) {
 
         var invalidMongoId = '55d45cb57e8450722b3b7dff';
@@ -145,6 +175,36 @@ describe('Vehicule:GetOne', function() {
                 });
         });
 
+        it('Should get the first marques of several marques by _id with marque', function(done) {
+            mockRequest.get('/vehicules')
+                .end(function(err, res) {
+                    var vehicule1 = JSON.parse(res.text).data[0];
+                    mockRequest.get('/vehicules/' + vehicule1._id + '?include=marque')
+                        .end(function (err, res) {
+                            var resContent = JSON.parse(res.text);
+
+                            expect(res.statusCode).to.equal(200);
+                            expect(resContent.code).to.equal(200);
+
+                            expect(resContent.data.name).to.equal(vehicule1.name);
+
+                            expect(resContent.data._id).to.be.a('string');
+                            expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
+
+                            expect(resContent.data.marque._id).to.equal(_marque1._id);
+                            expect(mongoose.Types.ObjectId.isValid(resContent.data.marque._id)).to.equal(true);
+
+                            expect(resContent.data.modified).to.be.a('string');
+                            var modifiedDate = new Date(Date.parse(resContent.data.modified));
+                            var isValideDate = !isNaN(modifiedDate.valueOf());
+                            expect(isValideDate).to.equal(true);
+
+                            expect(resContent.data.version).to.equal(0);
+                            done();
+                        });
+                });
+        });
+        
         it('Should get the seconde marques of several marques by _id', function(done) {
 
             mockRequest.get('/vehicules')
@@ -176,6 +236,37 @@ describe('Vehicule:GetOne', function() {
                         });
                 });
         });
+
+        it('Should get the seconde marques of several marques by _id with marque', function(done) {
+            mockRequest.get('/vehicules')
+                .end(function(err, res) {
+                    var vehicule2 = JSON.parse(res.text).data[1];
+                    mockRequest.get('/vehicules/' + vehicule2._id + '?include=marque')
+                        .end(function (err, res) {
+                            var resContent = JSON.parse(res.text);
+
+                            expect(res.statusCode).to.equal(200);
+                            expect(resContent.code).to.equal(200);
+
+                            expect(resContent.data.name).to.equal(vehicule2.name);
+
+                            expect(resContent.data._id).to.be.a('string');
+                            expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
+
+                            expect(resContent.data.marque._id).to.equal(_marque1._id);
+                            expect(mongoose.Types.ObjectId.isValid(resContent.data.marque._id)).to.equal(true);
+
+                            expect(resContent.data.modified).to.be.a('string');
+                            var modifiedDate = new Date(Date.parse(resContent.data.modified));
+                            var isValideDate = !isNaN(modifiedDate.valueOf());
+                            expect(isValideDate).to.equal(true);
+
+                            expect(resContent.data.version).to.equal(0);
+                            done();
+                        });
+                });
+        });
+        
     });
 
     describe('Other vehicules marques', function(){
@@ -241,6 +332,37 @@ describe('Vehicule:GetOne', function() {
                         });
                 });
         });
+
+        it('Should get more vehicules haven different marques with marque', function(done) {
+            mockRequest.get('/vehicules')
+                .end(function(err, res) {
+                    var vehiculeOtherMarque = JSON.parse(res.text).data[1];
+                    mockRequest.get('/vehicules/' + vehiculeOtherMarque._id + '?include=marque')
+                        .end(function (err, res) {
+                            var resContent = JSON.parse(res.text);
+
+                            expect(res.statusCode).to.equal(200);
+                            expect(resContent.code).to.equal(200);
+
+                            expect(resContent.data.name).to.equal(vehiculeOtherMarque.name);
+
+                            expect(resContent.data._id).to.be.a('string');
+                            expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
+
+                            expect(resContent.data.marque._id).to.equal(_marque2._id);
+                            expect(mongoose.Types.ObjectId.isValid(resContent.data.marque._id)).to.equal(true);
+
+                            expect(resContent.data.modified).to.be.a('string');
+                            var modifiedDate = new Date(Date.parse(resContent.data.modified));
+                            var isValideDate = !isNaN(modifiedDate.valueOf());
+                            expect(isValideDate).to.equal(true);
+
+                            expect(resContent.data.version).to.equal(0);
+                            done();
+                        });
+                });
+        });
+        
     });
 
     afterEach(function(){

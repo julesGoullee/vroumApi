@@ -57,7 +57,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
       ```
 
 * Include query:
-      -Vehicule(embed vehiculesModel array)
+      -Vehicule(embed vehiculeModel array)
       
       ```bash
       curl -i 
@@ -103,7 +103,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
       ```
       
   * Include query:
-      -Vehicule(embed vehiculesModel array)
+      -Vehicule(embed vehiculeModel array)
       
       ```bash
       curl -i 
@@ -214,6 +214,17 @@ API JSON restful nodejs (express, mongoose), mongoDB
         -H "Content-Type: application/json" 
         -X GET https://vroumapi.herokuapp.com/vehicules/{{vehicule._id}}
       ```
+      
+  * Include query:
+        -Marque(embed marqueModel)
+        
+        ```bash
+        curl -i 
+          -H "Accept: application/json"
+          -H "Content-Type: application/json" 
+          -X GET https://vroumapi.herokuapp.com/vehicules/{{vehicule._id}}?include=marque
+        ```
+       
   Update vehicule:
     
   * Method: PUT

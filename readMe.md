@@ -56,6 +56,16 @@ API JSON restful nodejs (express, mongoose), mongoDB
          -X GET https://vroumapi.herokuapp.com/marques
       ```
 
+* Include query:
+      -Vehicule(embed vehiculesModel array)
+      
+      ```bash
+      curl -i 
+        -H "Accept: application/json"
+        -H "Content-Type: application/json" 
+        -X GET https://vroumapi.herokuapp.com/marques?include=vehicules
+      ```
+      
   CreateOne marque:
     
   * Method: POST
@@ -99,7 +109,7 @@ API JSON restful nodejs (express, mongoose), mongoDB
       curl -i 
         -H "Accept: application/json"
         -H "Content-Type: application/json" 
-        -X GET https://vroumapi.herokuapp.com/marques/{{marque._id}}?include=vehicule
+        -X GET https://vroumapi.herokuapp.com/marques/{{marque._id}}?include=vehicules
       ```
             
   Update marque:

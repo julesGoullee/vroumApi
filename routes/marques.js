@@ -47,7 +47,7 @@ router.get('/:id', function (req, res, next) {
                 res.status(200);
                 res.json(resJson);
             }
-        },function(errBdd){
+        },function(errBdd) {
             debug('GetOne ' + errBdd);
             var err = new Error(errBdd);
             res.status(500);
@@ -68,13 +68,49 @@ router.get('/', function (req, res, next) {
     MarqueModel.find(function (errBdd, marques) {
 
         if (!errBdd) {
+            var promiseRequestBdd = [];
+            
+            if (req.query && req.query.include && req.query.include.indexOf('vehicules') !== -1 ) {
+                for (var i = 0; i < marques.length; i++) {
+                    var marque = marques[i].toJSON();
+                    promiseRequestBdd.push(VehiculeModel.find({marqueId: marque._id.toString()},{marqueId: 0}).exec());
+                }
+            }
+            
+            if(promiseRequestBdd.length > 0 ){
+                q.all(promiseRequestBdd).then(function(resMongo){
+                    var jsonData = {
+                        code: res.statusCode,
+                        data: []
+                    };
 
-            res.status(200);
+                    if(resMongo.length > 0 && resMongo[0] !== undefined){
+                        for (var i = 0; i < marques.length; i++) {
+                            jsonData.data.push(marques[i].toJSON());
+                            jsonData.data[i].vehicules = resMongo[i];
+                        }
+                    }
 
-            res.json({
-                code: res.statusCode,
-                data: marques
-            });
+                    res.status(200);
+
+                    res.json(jsonData);
+
+                },function(errBdd) {
+                    debug('GetOne ' + errBdd);
+                    var err = new Error(errBdd);
+                    res.status(500);
+                    next(err);
+                });
+            }
+            else {
+                res.status(200);
+
+                res.json({
+                    code: res.statusCode,
+                    data: marques
+                });
+            }
+            
         }
         else {
             debug('GetAll ' + errBdd);

@@ -80,7 +80,7 @@ describe('Marques:GetOne', function() {
             });
     });
     
-    describe('Two marque', function(){
+    describe('Two marques without vehicules', function(){
         beforeEach(function(done) {
             mockRequest.post('/marques')
                 .send(_mockMarques2)
@@ -148,7 +148,7 @@ describe('Marques:GetOne', function() {
         });
     });
     
-    describe('With include vehicule', function(){
+    describe('With include vehicules', function(){
         var _mockVehicule1;
         var _marque1;
         
@@ -252,7 +252,7 @@ describe('Marques:GetOne', function() {
                     });
             });
 
-            it('Should get one marque of one by _id with two vehicule', function(done) {
+            it('Should get one marque of one by _id with two vehicules', function(done) {
 
                 mockRequest.get('/marques')
                     .end(function(err, res) {
@@ -286,73 +286,94 @@ describe('Marques:GetOne', function() {
             });
         });
         
-        //describe('Two marque with marques', function(){
-        //    beforeEach(function(done) {
-        //        mockRequest.post('/marques')
-        //            .send(_mockMarques2)
-        //            .end(function() {
-        //                done();
-        //            });
-        //    });
-        //
-        //    it('Should get the first marques of several marques by _id', function(done) {
-        //
-        //        mockRequest.get('/marques')
-        //            .end(function(err, res) {
-        //                var marque1 = JSON.parse(res.text).data[0];
-        //
-        //                mockRequest.get('/marques/' + marque1._id)
-        //                    .end(function(err, res) {
-        //                        var resContent = JSON.parse(res.text);
-        //
-        //                        expect(resContent.code).to.equal(200);
-        //                        expect(res.statusCode).to.equal(200);
-        //
-        //                        expect(resContent.data.name).to.equal(marque1.name);
-        //
-        //                        expect(resContent.data._id).to.be.a('string');
-        //                        expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
-        //
-        //                        expect(resContent.data.modified).to.be.a('string');
-        //                        var modifiedDate = new Date(Date.parse(resContent.data.modified));
-        //                        var isValideDate = !isNaN(modifiedDate.valueOf());
-        //                        expect(isValideDate).to.equal(true);
-        //
-        //                        expect(resContent.data.version).to.equal(0);
-        //                        done();
-        //                    });
-        //            });
-        //    });
-        //
-        //    it('Should get the seconde marques of several marques by _id', function(done) {
-        //
-        //        mockRequest.get('/marques')
-        //            .end(function(err, res) {
-        //                var marque2 = JSON.parse(res.text).data[1];
-        //
-        //                mockRequest.get('/marques/' + marque2._id)
-        //                    .end(function(err, res) {
-        //                        var resContent = JSON.parse(res.text);
-        //
-        //                        expect(resContent.code).to.equal(200);
-        //                        expect(res.statusCode).to.equal(200);
-        //
-        //                        expect(resContent.data.name).to.equal(marque2.name);
-        //
-        //                        expect(resContent.data._id).to.be.a('string');
-        //                        expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
-        //
-        //                        expect(resContent.data.modified).to.be.a('string');
-        //                        var modifiedDate = new Date(Date.parse(resContent.data.modified));
-        //                        var isValideDate = !isNaN(modifiedDate.valueOf());
-        //                        expect(isValideDate).to.equal(true);
-        //
-        //                        expect(resContent.data.version).to.equal(0);
-        //                        done();
-        //                    });
-        //            });
-        //    });
-        //});
+        describe('Two marque with vehicules', function(){
+            var _mockVehicule3;
+            var _marque2;
+            
+            beforeEach(function(done) {
+                mockRequest.post('/marques')
+                    .send(_mockMarques2)
+                    .end(function() {
+                        mockRequest.get('/marques')
+                            .end(function(err, res){
+                            _marque2 = JSON.parse(res.text).data[1];
+                            _mockVehicule3 = {
+                                name: 'vehiculeName3',
+                                description: 'vehiculeDescription3',
+                                year: '2001',
+                                marqueId: _marque2._id
+                            };
+
+                            mockRequest.post('/vehicules')
+                                .send(_mockVehicule3)
+                                .end(function() {
+                                    done();
+                                });
+                        });
+                    });
+            });
+        
+            it('Should get the first marques of several marques by _id', function(done) {
+        
+                mockRequest.get('/marques')
+                    .end(function(err, res) {
+                        var marque1 = JSON.parse(res.text).data[0];
+        
+                        mockRequest.get('/marques/' + marque1._id + '?include=vehicules')
+                            .end(function(err, res) {
+                                var resContent = JSON.parse(res.text);
+        
+                                expect(resContent.code).to.equal(200);
+                                expect(res.statusCode).to.equal(200);
+        
+                                expect(resContent.data.name).to.equal(marque1.name);
+        
+                                expect(resContent.data._id).to.be.a('string');
+                                expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
+        
+                                expect(resContent.data.modified).to.be.a('string');
+                                var modifiedDate = new Date(Date.parse(resContent.data.modified));
+                                var isValideDate = !isNaN(modifiedDate.valueOf());
+                                expect(isValideDate).to.equal(true);
+        
+                                expect(resContent.data.version).to.equal(0);
+                                expect(resContent.data.vehicules[0].name).to.equal(_mockVehicule1.name);
+                                done();
+                            });
+                    });
+            });
+        
+            it('Should get the seconde marques of several marques by _id', function(done) {
+        
+                mockRequest.get('/marques')
+                    .end(function(err, res) {
+                        var marque2 = JSON.parse(res.text).data[1];
+        
+                        mockRequest.get('/marques/' + marque2._id + '?include=vehicules')
+                            .end(function(err, res) {
+                                var resContent = JSON.parse(res.text);
+        
+                                expect(resContent.code).to.equal(200);
+                                expect(res.statusCode).to.equal(200);
+        
+                                expect(resContent.data.name).to.equal(marque2.name);
+        
+                                expect(resContent.data._id).to.be.a('string');
+                                expect(mongoose.Types.ObjectId.isValid(resContent.data._id)).to.equal(true);
+        
+                                expect(resContent.data.modified).to.be.a('string');
+                                var modifiedDate = new Date(Date.parse(resContent.data.modified));
+                                var isValideDate = !isNaN(modifiedDate.valueOf());
+                                expect(isValideDate).to.equal(true);
+        
+                                expect(resContent.data.version).to.equal(0);
+                                expect(resContent.data.vehicules[0].name).to.equal(_mockVehicule3.name);
+
+                                done();
+                            });
+                    });
+            });
+        });
     });
 
     afterEach(function(){

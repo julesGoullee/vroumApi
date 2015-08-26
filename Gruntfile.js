@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     require('jit-grunt')(grunt);
 
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
         mochaTest: {
             test: {
                 options: {
@@ -119,5 +120,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('travis', ['mochaTest','jshint:all','complexity:all']);
+    grunt.registerTask('travis', [
+        'mochaTest','jshint:all','complexity:all'
+    ]);
 };
